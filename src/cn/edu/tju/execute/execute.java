@@ -62,7 +62,7 @@ public class execute {
 		fileReader = new FileReader(filePath);
 		bufferedReader = new BufferedReader(fileReader);
 		int count=0;
-		//FileWriter fileWritter = new FileWriter("/home/szy/result-100",true);
+		FileWriter fileWritter = new FileWriter("/home/szy/result-600",true);
 		//BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 		long time=0;
 		while ((query=bufferedReader.readLine()) != null) {
@@ -76,16 +76,17 @@ public class execute {
 			Stack<HashMap<String, ArrayList<String>>> stack = new Stack<HashMap<String, ArrayList<String>>>();
 			Stack<HashMap<String, ArrayList<String>>> line = AssemblyQuery.postOrder(Root, query, stack,gc);
 			//bufferWritter.write(++count+"			"+line+"\n");
-			//System.out.println(count);
+			//System.out.println(++count);
+			//System.out.println(line);
 			long time2=System.currentTimeMillis(); 
 			long interval=time2-time1;  
 			time=time+interval;
-			//fileWritter.write(++count+"			"+line+"\n");
-			//System.out.println(count);
-			//fileWritter.flush();
+			.fileWritter.write(++count+"			"+line+"\n");
+			//System.out.println(++count);
+			fileWritter.flush();
 			}
 				//bufferWritter.close();	
-			//	fileWritter.close();
+			fileWritter.close();
 				//System.out.println("end");
 				System.out.println(time);
 	}
