@@ -39,35 +39,19 @@ import cn.edu.tju.where.Where;
 
 public class execute {
 	public static void main(String[] args) throws IOException {
-		/*
-		String query = "PREFIX owl:<http://www.w3.org/2002/07/owl#>   SELECT ?x ?y ?z WHERE{	{?x <rdf:type> ?y. }		OPTIONAL {?x <rdf:isstuden> ?z. }	}";
-		String prefix=Prefix.find_prefix(query);
-		String where=Where.find_where(query);
-		GstoreConnector gc = new GstoreConnector("127.0.0.1", 3305);
-		gc.build("try", "example/test");
-		String results=GetResults.getresults(where);
-		TreeNode Root=OptTree.construcTree(results);
-		Stack<HashMap<String, ArrayList<String>>> stack = new Stack<HashMap<String, ArrayList<String>>>();
-		Stack<HashMap<String, ArrayList<String>>> line = AssemblyQuery.postOrder(Root, query, stack,gc);
-		System.out.println(line);*/
-		String filePath = "/home/szy/test-600";
-		//String query="PREFIX owl:<http://www.w3.org/2002/07/owl#> SELECT ?x ?y WHERE{	{?x <rdf:type> ?y. } OPTIONAL {?x <rdf:isstudent> ?z}  	 }";
+		String filePath = "/home/szy/data/test-600";
 		String query=null;
 		FileReader fileReader = null;
 		BufferedReader bufferedReader = null;
 		GstoreConnector gc = new GstoreConnector("127.0.0.1", 3305);
-		//gc.build("geo-final", "example/geo-final");
-		//gc.load("geo-final");
 		gc.load("LUBM10");
 		fileReader = new FileReader(filePath);
-		bufferedReader = new BufferedReader(fileReader);
+		bufferedReader = new BufferedReader( fileReader);
 		int count=0;
-		FileWriter fileWritter = new FileWriter("/home/szy/result-600",true);
-		//BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+	//	FileWriter fileWritter = new FileWriter("/home/szy/exp/result-100",true);
+		FileWriter countWriter = new FileWriter("/home/szy/exp/count-600",true);
 		long time=0;
 		while ((query=bufferedReader.readLine()) != null) {
-			//System.out.println(query);
-			//String prefix=Prefix.find_prefix(query);
 			String where=Where.find_where(query);
 			String results=GetResults.getresults(where);
 			//System.out.println(results);
@@ -81,14 +65,36 @@ public class execute {
 			long time2=System.currentTimeMillis(); 
 			long interval=time2-time1;  
 			time=time+interval;
-			.fileWritter.write(++count+"			"+line+"\n");
+			//fileWritter.write(++count+"			"+line+"\n");
+			countWriter.write(Matching.GetLength(line.get(0))+"\n");
+		//	System.out.println();
 			//System.out.println(++count);
-			fileWritter.flush();
+			//fileWritter.flush();
+			countWriter.flush();
 			}
-				//bufferWritter.close();	
-			fileWritter.close();
+			countWriter.close();
+			//fileWritter.close();
 				//System.out.println("end");
-				System.out.println(time);
+				System.out.println("sum_time"+time);
+				FileReader fileReader_time = new FileReader("/home/szy/exp/time-600");
+				BufferedReader bufferedReader_time = new BufferedReader(fileReader_time);
+				String time_line=null;
+				int sum=0;
+				while ((time_line=bufferedReader_time.readLine()) != null) {
+							int t=Integer.parseInt(time_line);
+							sum=sum+t;
+				}
+				System.out.println("gstore_time:"+sum);
+				FileReader fileReader_count = new FileReader("/home/szy/exp/count-600");
+				BufferedReader bufferedReader_count = new BufferedReader(fileReader_count);
+				String count_line=null;
+				int s=0;
+				while ((count_line=bufferedReader_count.readLine()) != null) {
+							int t=Integer.parseInt(count_line);
+							s=s+t;
+							
+				} 
+				System.out.println("count:	"+s);
 	}
 
 }

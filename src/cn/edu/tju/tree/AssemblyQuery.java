@@ -22,13 +22,13 @@ public class AssemblyQuery {
 			if(!currNode.data.equals("OPTIONAL")){
 				String subquery = ConstructQuery.constructquery(query, currNode.data);
 				//get result from gstore,asume it as answer
-				//long time1=System.currentTimeMillis(); 
+				long time1=System.currentTimeMillis(); 
 				String answer=gc.query(subquery);
-				//long time2=System.currentTimeMillis();
-				//long interval=time2-time1;
-			//	FileWriter fileWritter = new FileWriter("/home/szy/time",true);
-			//	fileWritter.write(interval+"\n");
-			//	fileWritter.flush();
+				long time2=System.currentTimeMillis();
+				long interval=time2-time1;
+				FileWriter fileWritter = new FileWriter("/home/szy/exp/time-600",true);
+				fileWritter.write(interval+"\n");
+				fileWritter.flush();
 				//System.out.println("	answer:	"+answer);
 				if((answer.length()>1)){
 					ArrayList<ArrayList<String>> result = GetSparqlResults.getsparqlresults(answer);
